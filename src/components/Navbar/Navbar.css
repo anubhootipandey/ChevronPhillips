@@ -51,6 +51,7 @@ nav:after {
     margin-top: auto; 
     padding-top: 0; 
     border: none; 
+    border-top: 1px solid #e5e7eb;
 }
 
 .bottom-nav-item {
@@ -58,4 +59,57 @@ nav:after {
     justify-content: center;
     align-items: center;
     height: 100%; 
+}
+
+
+.top-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.bottom-nav-item:hover .card-modal {
+    display: flex;
+}
+
+.card-modal {
+    display: none;
+    width: 700px;
+    border: 1px solid #e5e7eb;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.card-modal img {
+    width: 100%;
+    height: 200px;
+}
+
+.card-modal .text {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-modal .text h4 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+
+.card-modal .left-card{
+    background-color: rgb(7, 7, 177);
+}
+
+.card-modal .right-card{
+    background-color: rgb(244, 245, 247);
+    color: rgb(84, 84, 231);
+    font-weight: 600;
+}
+
+.card-modal .text p {
+    margin: 0;
+    color: #4a5568;
+    font-size: 0.875rem;
 }
