@@ -63,10 +63,15 @@ nav:after {
 
 
 .top-nav {
-    display: grid;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
     grid-template-columns: 1fr 1fr;
-    border-top: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
+    border-left: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    height: 100%;
+    margin-top: -6px; 
+    margin-bottom: -6px; 
 }
 
 .bottom-nav-item:hover .card-modal {
@@ -113,3 +118,4 @@ nav:after {
     color: #4a5568;
     font-size: 0.875rem;
 }
+
