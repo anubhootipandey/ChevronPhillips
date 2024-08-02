@@ -57,13 +57,13 @@ const Navbar = () => {
                 <div className="flex items-center justify-between">
                     <img src={logo} alt="logo" className="h-[70px]" />
                     <div className="navbars">
-                        <div className="top-nav flex justify-end items-center space-x-4">
+                        <div className="top-nav flex justify-end items-center space-x-4 mb-[-10px] border-t-2 mt-[-25px]" style={{ height: '50px' }}>
                             <ul className="flex space-x-4">
                                 <li><a href="#" className="text-gray-800 hover:text-gray-600">Contact Us</a></li>
                                 <li><a href="#" className="text-gray-800 hover:text-gray-600">Locations</a></li>
                                 <li><a href="#" className="text-gray-800 hover:text-gray-600">Login</a></li>
                             </ul>
-                            <img src={search} alt="searchIcon" className="h-4 w-4" />
+                            <img src={search} alt="searchIcon" className="h-[50px] w-[50px] text-gray-600 px-4 border-l-2" style={{ height: "50px" }} />
                         </div>
                         <div className="mt-2 mb-[-25px] w-full">
                             <div className="flex justify-end">
@@ -78,7 +78,11 @@ const Navbar = () => {
                                             <a href="#" className="text-gray-800 hover:text-gray-600">{item.title}</a>
                                             {/* dropdown model */}
                                             {hoveredItem === index && (
-                                                <div className="card-modal absolute top-24 left-0 bg-white shadow-lg flex">
+                                                <div className="card-modal absolute top-24 left-0 bg-white shadow-lg flex"
+                                                style={{ 
+                                                    left: (index >= navItems.length - 4) ? 'auto' : '0', 
+                                                    right: (index >= navItems.length - 4) ? '0' : 'auto' 
+                                                }}>
                                                     {/* leftcard */}
                                                     <div className="left-card w-full flex flex-col items-start">
                                                         <img src={item.image} alt={item.title} className="mb-4" />
