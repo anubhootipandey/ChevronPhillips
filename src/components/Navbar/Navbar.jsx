@@ -9,10 +9,12 @@ import image5 from "../assets/images5.jpg";
 import image6 from "../assets/images6.jpg";
 import searchIcon from "../assets/search.svg";
 import closeIcon from "../assets/closeIcon.svg";
+import hamburgerIcon from "../assets/menu.png"; 
 
 const Navbar = () => {
     const [hoveredItem, setHoveredItem] = useState(null);
     const [searchMode, setSearchMode] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const navItems = [
         {
@@ -61,6 +63,10 @@ const Navbar = () => {
         setSearchMode(false);
     };
 
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen);
+    };
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (searchMode && !event.target.closest('.search-input, .search-icon')) {
@@ -79,8 +85,35 @@ const Navbar = () => {
             <div className="container mx-auto flex flex-col">
                 <div className="flex items-center justify-between">
                     <img src={logo} alt="logo" className="h-[70px]" />
+
+                    {/* menu button */}
+                    <img 
+                        src={hamburgerIcon} 
+                        alt="menu" 
+                        className="h-[40px] w-[40px] ml-[10px] cursor-pointer block lg:hidden" 
+                        onClick={toggleMobileMenu} 
+                    />
+                    
+                    {/* Mobile menu */}
+                    {mobileMenuOpen && (
+                        <div className="mobile-menu lg:hidden fixed top-0 left-0 w-full bg-white shadow-lg">
+                            <div className="flex flex-col p-4">
+                                <button onClick={toggleMobileMenu} className="self-end mb-4">
+                                    <img src={closeIcon} alt="close" className="h-[30px] w-[30px]" />
+                                </button>
+                                <ul>
+                                    {navItems.map((item, index) => (
+                                        <li key={index} className="py-2">
+                                            <a href="#" className="text-gray-800 text-lg font-bold">{item.title}</a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    )}
+
                     {/* top nav */}
-                    <div className="navbars">
+                    <div className="navbars hidden lg:flex flex-col">
                         <div className="top-nav flex justify-end items-center space-x-4 mb-[-10px] border-t-2 mt-[-25px]" style={{ height: '50px' }}>
                             {searchMode ? (
                                 <div className="search-input relative flex items-center w-full">
@@ -112,7 +145,7 @@ const Navbar = () => {
                                             <a href="#" className="text-gray-800 hover:text-gray-600">{item.title}</a>
                                             {/* dropdown model */}
                                             {hoveredItem === index && (
-                                                <div className="card-modal absolute top-24 left-0 bg-white shadow-lg flex"
+                                                <div className="card-modal mt-[-4px] absolute top-24 left-0 bg-white shadow-lg flex"
                                                     style={{
                                                         left: (index >= navItems.length - 4) ? 'auto' : '0',
                                                         right: (index >= navItems.length - 4) ? '0' : 'auto'
