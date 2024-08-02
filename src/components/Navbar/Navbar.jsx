@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Navbar.css";
 import logo from "../assets/logo.svg";
 import image1 from "../assets/images1.jpg";
@@ -7,10 +7,12 @@ import image3 from "../assets/images3.jpg";
 import image4 from "../assets/images4.jpg";
 import image5 from "../assets/images5.jpg";
 import image6 from "../assets/images6.jpg";
-import search from "../assets/search.svg";
+import searchIcon from "../assets/search.svg";
+import closeIcon from "../assets/closeIcon.svg";
 
 const Navbar = () => {
     const [hoveredItem, setHoveredItem] = useState(null);
+    const [searchMode, setSearchMode] = useState(false);
 
     const navItems = [
         {
@@ -51,20 +53,52 @@ const Navbar = () => {
         }
     ];
 
+    const handleSearchClick = () => {
+        setSearchMode(true);
+    };
+
+    const handleCloseSearch = () => {
+        setSearchMode(false);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchMode && !event.target.closest('.search-input, .search-icon')) {
+                setSearchMode(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [searchMode]);
+
     return (
         <nav className="bg-white p-6 shadow-md">
             <div className="container mx-auto flex flex-col">
                 <div className="flex items-center justify-between">
                     <img src={logo} alt="logo" className="h-[70px]" />
+                    {/* top nav */}
                     <div className="navbars">
                         <div className="top-nav flex justify-end items-center space-x-4 mb-[-10px] border-t-2 mt-[-25px]" style={{ height: '50px' }}>
-                            <ul className="flex space-x-4">
-                                <li><a href="#" className="text-gray-800 hover:text-gray-600">Contact Us</a></li>
-                                <li><a href="#" className="text-gray-800 hover:text-gray-600">Locations</a></li>
-                                <li><a href="#" className="text-gray-800 hover:text-gray-600">Login</a></li>
-                            </ul>
-                            <img src={search} alt="searchIcon" className="h-[50px] w-[50px] text-gray-600 px-4 border-l-2" style={{ height: "50px" }} />
+                            {searchMode ? (
+                                <div className="search-input relative flex items-center w-full">
+                                    <input type="text" className="w-full px-4 py-2" placeholder="Search..." autoFocus />
+                                    <img src={closeIcon} alt="close" className="absolute right-2 cursor-pointer" onClick={handleCloseSearch} />
+                                </div>
+                            ) : (
+                                <>
+                                    <ul className="flex space-x-4">
+                                        <li><a href="#" className="text-gray-800 hover:text-gray-600">Contact Us</a></li>
+                                        <li><a href="#" className="text-gray-800 hover:text-gray-600">Locations</a></li>
+                                        <li><a href="#" className="text-gray-800 hover:text-gray-600">Login</a></li>
+                                    </ul>
+                                    <img src={searchIcon} alt="search" className="h-[50px] w-[50px] text-gray-600 px-4 border-l-2 search-icon cursor-pointer" onClick={handleSearchClick} />
+                                </>
+                            )}
                         </div>
+                        {/* bottom nav */}
                         <div className="mt-2 mb-[-25px] w-full">
                             <div className="flex justify-end">
                                 <ul className="bottom-nav grid grid-cols-6 gap-0 w-full">
@@ -79,10 +113,10 @@ const Navbar = () => {
                                             {/* dropdown model */}
                                             {hoveredItem === index && (
                                                 <div className="card-modal absolute top-24 left-0 bg-white shadow-lg flex"
-                                                style={{ 
-                                                    left: (index >= navItems.length - 4) ? 'auto' : '0', 
-                                                    right: (index >= navItems.length - 4) ? '0' : 'auto' 
-                                                }}>
+                                                    style={{
+                                                        left: (index >= navItems.length - 4) ? 'auto' : '0',
+                                                        right: (index >= navItems.length - 4) ? '0' : 'auto'
+                                                    }}>
                                                     {/* leftcard */}
                                                     <div className="left-card w-full flex flex-col items-start">
                                                         <img src={item.image} alt={item.title} className="mb-4" />
