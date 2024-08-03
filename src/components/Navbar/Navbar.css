@@ -8,8 +8,8 @@ nav:after {
     bottom: -4px; 
     left: 0;
     width: 100%;
-    height: 5px;
-    background: linear-gradient(to left, #f00, #00f); 
+    height: 8px;
+    background: linear-gradient(to left, #f00, rgb(3, 3, 196)); 
 }
 
 .nav-item,
@@ -60,7 +60,6 @@ nav:after {
     align-items: center;
     height: 100%; 
 }
-
 
 .top-nav {
     display: flex;
@@ -119,3 +118,82 @@ nav:after {
     font-size: 0.875rem;
 }
 
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: 100%;
+    background-color: #FFFFFF;
+    z-index: 1000;
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-menu.open {
+    transform: translateX(0);
+}
+
+.mobile-menu .close-button {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+.mobile-menu .close-button img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.mobile-menu .menu-items {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.mobile-menu .menu-items li {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.mobile-menu .menu-items li a {
+    font-size: 1rem;
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.mobile-menu .menu-items li a:hover {
+    background-color: #F0F0F0;
+}
+
+.mobile-menu .search-section {
+    padding: 1rem;
+}
+
+.mobile-menu .search-section input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.mobile-menu .search-section button {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: rgb(7, 7, 177);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.mobile-menu .search-section button:hover {
+    background-color: rgb(23, 23, 202);
+}

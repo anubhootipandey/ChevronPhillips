@@ -84,7 +84,7 @@ const Navbar = () => {
         <nav className="bg-white p-6 shadow-md">
             <div className="container mx-auto flex flex-col">
                 <div className="flex items-center justify-between">
-                    <img src={logo} alt="logo" className="h-[70px]" />
+                    <img src={logo} alt="logo" className="md:h-[70px] h-[60px]" />
 
                     {/* menu button */}
                     <img 
@@ -94,23 +94,27 @@ const Navbar = () => {
                         onClick={toggleMobileMenu} 
                     />
                     
-                    {/* Mobile menu */}
-                    {mobileMenuOpen && (
-                        <div className="mobile-menu lg:hidden fixed top-0 left-0 w-full bg-white shadow-lg">
-                            <div className="flex flex-col p-4">
-                                <button onClick={toggleMobileMenu} className="self-end mb-4">
-                                    <img src={closeIcon} alt="close" className="h-[30px] w-[30px]" />
-                                </button>
-                                <ul>
-                                    {navItems.map((item, index) => (
-                                        <li key={index} className="py-2">
-                                            <a href="#" className="text-gray-800 text-lg font-bold">{item.title}</a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                   {/* Mobile menu */}
+                   <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
+                        <div className="close-button">
+                            <img src={closeIcon} alt="close" className="cursor-pointer" onClick={toggleMobileMenu} />
                         </div>
-                    )}
+                        <div className="menu-items">
+                            {navItems.map((item, index) => (
+                                <li key={index}>
+                                    <a href="#" className="text-gray-800 text-lg font-bold">{item.title}</a>
+                                </li>
+                            ))}
+                            <li><a href="#" className="text-gray-800 text-lg font-bold">Contact Us</a></li>
+                            <li><a href="#" className="text-gray-800 text-lg font-bold">Locations</a></li>
+                            <li><a href="#" className="text-gray-800 text-lg font-bold">Login</a></li>
+                        </div>
+                        <div className="search-section">
+                            <input type="text" placeholder="Search ..." />
+                            <button>Search</button>
+                        </div>
+                    </div>
+
 
                     {/* top nav */}
                     <div className="navbars hidden lg:flex flex-col">
@@ -131,6 +135,7 @@ const Navbar = () => {
                                 </>
                             )}
                         </div>
+
                         {/* bottom nav */}
                         <div className="mt-2 mb-[-25px] w-full">
                             <div className="flex justify-end">
