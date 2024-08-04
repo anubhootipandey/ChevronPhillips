@@ -11,29 +11,45 @@ import searchIcon from "../assets/search.svg";
 import closeIcon from "../assets/closeIcon.svg";
 import hamburgerIcon from "../assets/menu.png"; 
 
+
 const Navbar = () => {
     const [hoveredItem, setHoveredItem] = useState(null);
     const [searchMode, setSearchMode] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [hoveredSubItem, setHoveredSubItem] = useState(null);
+    const [expandedItems, setExpandedItems] = useState({});
 
     const navItems = [
         {
             title: "Who We Are",
             image: image1,
             text: "We make the petrochemical solutions found in products of all kinds — with purpose, collaboration and care.",
-            option: ['Mission & Values', 'Company History', 'Environmental, Health, Safety & Security', 'Diversity, Equity & Inclusion', 'Community Involvement', 'Leadership', 'Financials', 'Suppliers'],
+            option: ['Mission & Values', 'Company History', 
+                {title: 'Environmental, Health, Safety & Security', subOptions: ['Product Summaries', 'Regulatory Information']}, 
+                'Diversity, Equity & Inclusion', 'Community Involvement', 
+                {title: 'Leadership', subOptions: 
+                    ['Steven Prusak', 'Bryan Canfield', 'Darren Ercolani', 'Tim Hill', 'Justine Smith', 'Maricela Caballero', 'Elliott W.H Johnson', 'Allison Martinez', 'Kevin Ristroph']}, 
+                'Financials', {title: 'Suppliers', subOptions: ['Golden Triangle Polymers LLC', 'Supplier Diversity']}],
         },
         {
             title: "What We Do",
             image: image2,
             text: "We offer a wide range of solutions essential to your products.",
-            option: ['Industries', 'Solutions', 'Licensing', 'Product Finder'],
+            option: [{title: 'Industries', subOptions: ['Automotive', 'Energy & Chemical', 'Food & Agriculture', 'Home & Electronics', 'Medical & Pharmaceutical', 'Personal Care', 'Recreational', 'Industrial']}, 
+            {title: 'Solutions', subOptions: ['Aromatics', 'Drilling Specialities', 'Normal Alpha Olefins', 'Olefins', 'Performance Pipe', 'Polyalphaolefins', 'Polyethylene', 'Speciality Chemicals']}, 
+            {title: 'Licensing', subOptions: ['Overview', 'MarTECH Technology', 'Aromax Technology', 'Contact Us']}, 
+            'Product Finder'],
         },
         {
             title: "Sustainability",
             image: image3,
             text: "Our sustainability strategy encompasses the concerns and issues identified by our stakeholders and we are committed to addressing these issues.",
-            option: ['Our Story', 'Climate Change', 'Product Sustainability & Circularity', 'Social Responsibility', 'UN SDGs', 'Impact & Reporting', 'Collaborations and Engagements', 'Sustainably Smart'],
+            option: ['Our Story', 'Climate Change', 
+                {title: 'Product Sustainability & Circularity', subOptions: ['Product Responsibility', 'Plastic Management']}, 
+                {title: 'Social Responsibility', subOptions: ['Protect Human Rights', 'Priortize Health, Safety and Well-being', 'caring for Our Communities']}, 
+                'UN SDGs', 
+                {title: 'Impact & Reporting', subOptions: ['Managing Climate Risks', 'Sustainanility Report']}, 
+                'Collaborations and Engagements', 'Sustainably Smart'],
         },
         {
             title: "Media & Events",
@@ -51,7 +67,10 @@ const Navbar = () => {
             title: "Careers",
             image: image6,
             text: "We’re a company with deep-rooted values, and we’re looking for people like you to join our team.",
-            option: ['Find a Job', 'Working with us', 'Job Openings', 'Europe Job Opportunities', 'Job Opportuniteiten Europa'],
+            option: [
+                {title: 'Find a Job', subOptions: ['Applicant Login', 'Create an Account']}, 
+                {title: 'Working with us', subOptions: ['Benefits & Rewards', 'Safety & Sustainability', 'Career & Leadership', 'Intern & Graduate Programs', 'Women', 'Veterans']}, 
+                'Job Openings', 'Europe Job Opportunities', 'Job Opportuniteiten Europa'],
         }
     ];
 
@@ -65,6 +84,13 @@ const Navbar = () => {
 
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!mobileMenuOpen);
+    };
+
+    const handleItemClick = (index) => {
+        setExpandedItems(prevState => ({
+            ...prevState,
+            [index]: !prevState[index]
+        }));
     };
 
     useEffect(() => {
@@ -81,7 +107,7 @@ const Navbar = () => {
     }, [searchMode]);
 
     return (
-        <nav className="bg-white p-6 shadow-md ">
+        <nav className="bg-white p-6 shadow-md">
             <div className="container mx-auto flex flex-col">
                 <div className="flex items-center justify-between">
                     <img src={logo} alt="logo" className="md:h-[70px] h-[60px]" />
@@ -102,7 +128,25 @@ const Navbar = () => {
                         <div className="menu-items">
                             {navItems.map((item, index) => (
                                 <li key={index}>
-                                    <a href="#" className="text-gray-800 text-lg font-bold">{item.title}</a>
+                                    <a href="#" className="text-gray-800 text-lg font-bold" onClick={() => handleItemClick(index)}>{item.title}</a>
+                                    {expandedItems[index] && (
+                                        <ul className="pl-4 mt-2">
+                                            {item.option.map((option, optIndex) => (
+                                                typeof option === 'string' ? (
+                                                    <li key={optIndex} className="py-1"><a href="#">{option}</a></li>
+                                                ) : (
+                                                    <li key={optIndex} className="py-1">
+                                                        <a href="#" onClick={(e) => e.preventDefault()}>{option.title}</a>
+                                                        <ul className="pl-4">
+                                                            {option.subOptions.map((subOption, subOptIndex) => (
+                                                                <li key={subOptIndex} className="py-1"><a href="#">{subOption}</a></li>
+                                                            ))}
+                                                        </ul>
+                                                    </li>
+                                                )
+                                            ))}
+                                        </ul>
+                                    )}
                                 </li>
                             ))}
                             <li><a href="#" className="text-gray-800 text-lg font-bold">Contact Us</a></li>
@@ -152,8 +196,8 @@ const Navbar = () => {
                                             {hoveredItem === index && (
                                                 <div className="card-modal mt-[-4px] absolute top-24 left-0 bg-white shadow-lg flex"
                                                     style={{
-                                                        left: (index >= navItems.length - 4) ? 'auto' : '0',
-                                                        right: (index >= navItems.length - 4) ? '0' : 'auto'
+                                                        left: (index >= navItems.length - 5) ? 'auto' : '0',
+                                                        right: (index >= navItems.length - 5) ? '0' : 'auto'
                                                     }}>
                                                     {/* leftcard */}
                                                     <div className="left-card w-full flex flex-col items-start">
@@ -165,9 +209,28 @@ const Navbar = () => {
                                                         <button className='py-2 px-4 text-white m-4 border border-blue-400'>Learn more</button>
                                                     </div>
                                                     {/* rightcard */}
-                                                    <div className="right-card w-full grid grid-cols-1 gap-0">
+                                                    <div className="right-card w-full grid grid-cols-1 gap-0 relative">
                                                         {item.option.map((opt, optIndex) => (
-                                                            <div key={optIndex} className="option-box border p-1">{opt}</div>
+                                                            typeof opt === 'string' ? (
+                                                                <div key={optIndex} className="option-box border p-1">{opt}</div>
+                                                            ) : (
+                                                                <div 
+                                                                    key={optIndex} 
+                                                                    className="option-box border p-1 relative"
+                                                                    onMouseEnter={() => setHoveredSubItem(optIndex)}
+                                                                    onMouseLeave={() => setHoveredSubItem(null)}
+                                                                >
+                                                                    {opt.title}
+                                                                    <span className="arrow">&gt;</span>
+                                                                    {hoveredSubItem === optIndex && (
+                                                                        <div className="sub-options absolute top-0 mt-[-1px] ml-[120px] w-[260px] p-0 bg-white shadow-lg z-10">
+                                                                            {opt.subOptions.map((subOpt, subOptIndex) => (
+                                                                                <div key={subOptIndex} className="option-box border p-2">{subOpt}</div>
+                                                                            ))}
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                            )
                                                         ))}
                                                     </div>
                                                 </div>
