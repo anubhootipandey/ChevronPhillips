@@ -81,7 +81,7 @@ const Navbar = () => {
     }, [searchMode]);
 
     return (
-        <nav className="bg-white p-6 shadow-md">
+        <nav className="bg-white p-6 shadow-md ">
             <div className="container mx-auto flex flex-col">
                 <div className="flex items-center justify-between">
                     <img src={logo} alt="logo" className="md:h-[70px] h-[60px]" />
