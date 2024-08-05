@@ -24,6 +24,10 @@ nav {
     padding: 17px;
 }
 
+.navbar-shrink .hamburger-icon {
+    top: 28px;
+}
+
 nav:after {
     content: '';
     position: absolute;
@@ -220,3 +224,10 @@ nav:after {
     background-color: rgb(23, 23, 202);
 }
 
+.hamburger-icon {
+    position: absolute;
+    top: 37px;
+    right: 20px;
+    cursor: pointer;
+    transition: top 0.3s ease;
+}

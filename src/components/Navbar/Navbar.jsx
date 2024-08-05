@@ -132,7 +132,7 @@ const Navbar = () => {
                     <img 
                         src={hamburgerIcon} 
                         alt="menu" 
-                        className="h-[40px] w-[40px] ml-[10px] cursor-pointer block lg:hidden" 
+                        className="hamburger-icon h-[40px] w-[40px] ml-[10px] cursor-pointer block lg:hidden ${navbarShrink ? 'navbar-shrink' : ''}`}" 
                         onClick={toggleMobileMenu} 
                     />
                     
