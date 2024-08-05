@@ -18,6 +18,7 @@ const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [hoveredSubItem, setHoveredSubItem] = useState(null);
     const [expandedItems, setExpandedItems] = useState({});
+    const [navbarShrink, setNavbarShrink] = useState(false);
 
     const navItems = [
         {
@@ -106,11 +107,26 @@ const Navbar = () => {
         };
     }, [searchMode]);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setNavbarShrink(true);
+            } else {
+                setNavbarShrink(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
-        <nav className="bg-white p-6 shadow-md">
+        <nav className={`navbar bg-white p-6 shadow-md ${navbarShrink ? 'navbar-shrink' : ''}`}>
             <div className="container mx-auto flex flex-col">
                 <div className="flex items-center justify-between">
-                    <img src={logo} alt="logo" className="md:h-[70px] h-[60px]" />
+                    <img src={logo} alt="logo" className="logo md:h-[70px] h-[60px]" />
 
                     {/* menu button */}
                     <img 
@@ -246,5 +262,6 @@ const Navbar = () => {
         </nav>
     );
 };
+
 
 export default Navbar;

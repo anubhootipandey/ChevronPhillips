@@ -1,5 +1,27 @@
 nav {
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: white;
+}
+
+.navbar-shrink {
+    height: 100px;
+    padding: 10px 0;
+}
+
+.navbar-shrink .logo{
+    height: 200px;
+    width: 200px;
+    margin-top: -80px;
+}
+
+.navbar-shrink .top-nav{
+    margin-top: -90px;
+}
+
+.navbar-shrink .bottom-nav li{
+    padding: 17px;
 }
 
 nav:after {
